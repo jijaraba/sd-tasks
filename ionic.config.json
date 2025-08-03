@@ -1,0 +1,7 @@
+{
+  "name": "sd-tasks",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite"
+}

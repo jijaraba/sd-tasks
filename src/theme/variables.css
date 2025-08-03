@@ -1,0 +1,505 @@
+/* For information on how to create your own theme, please see:
+http://ionicframework.com/docs/theming/ */
+
+/**
+ * Light Theme Variables
+ * -----------------------------------------------------
+ * These variables are used to customize the light theme only.
+ * Dark mode has been disabled for this application.
+ */
+
+:root {
+  /** primary - SD Orange **/
+  --ion-color-primary: #f06a6a;
+  --ion-color-primary-rgb: 240, 106, 106;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #d45d5d;
+  --ion-color-primary-tint: #f27979;
+
+  /** secondary - SD Teal **/
+  --ion-color-secondary: #13d4aa;
+  --ion-color-secondary-rgb: 19, 212, 170;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #11bb96;
+  --ion-color-secondary-tint: #2bd8b3;
+
+  /** tertiary **/
+  --ion-color-tertiary: #5260ff;
+  --ion-color-tertiary-rgb: 82, 96, 255;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: #4854e0;
+  --ion-color-tertiary-tint: #6370ff;
+
+  /** success - SD Green **/
+  --ion-color-success: #72dd9a;
+  --ion-color-success-rgb: 114, 221, 154;
+  --ion-color-success-contrast: #000000;
+  --ion-color-success-contrast-rgb: 0, 0, 0;
+  --ion-color-success-shade: #64c287;
+  --ion-color-success-tint: #80e0a4;
+
+  /** warning - SD Yellow **/
+  --ion-color-warning: #ffd666;
+  --ion-color-warning-rgb: 255, 214, 102;
+  --ion-color-warning-contrast: #000000;
+  --ion-color-warning-contrast-rgb: 0, 0, 0;
+  --ion-color-warning-shade: #e0bc5a;
+  --ion-color-warning-tint: #ffda75;
+
+  /** danger - SD Red **/
+  --ion-color-danger: #fd9a9a;
+  --ion-color-danger-rgb: 253, 154, 154;
+  --ion-color-danger-contrast: #000000;
+  --ion-color-danger-contrast-rgb: 0, 0, 0;
+  --ion-color-danger-shade: #de8787;
+  --ion-color-danger-tint: #fda4a4;
+
+  /** dark - SD Dark **/
+  --ion-color-dark: #151b26;
+  --ion-color-dark-rgb: 21, 27, 38;
+  --ion-color-dark-contrast: #ffffff;
+  --ion-color-dark-contrast-rgb: 255, 255, 255;
+  --ion-color-dark-shade: #131722;
+  --ion-color-dark-tint: #2c333c;
+
+  /** medium - SD Gray **/
+  --ion-color-medium: #9ca6af;
+  --ion-color-medium-rgb: 156, 166, 175;
+  --ion-color-medium-contrast: #ffffff;
+  --ion-color-medium-contrast-rgb: 255, 255, 255;
+  --ion-color-medium-shade: #89929a;
+  --ion-color-medium-tint: #a6afb7;
+
+  /** light - SD Light Background **/
+  --ion-color-light: #fafbfc;
+  --ion-color-light-rgb: 250, 251, 252;
+  --ion-color-light-contrast: #000000;
+  --ion-color-light-contrast-rgb: 0, 0, 0;
+  --ion-color-light-shade: #dcdde0;
+  --ion-color-light-tint: #fbfcfc;
+
+  /**
+   * SD-inspired Background and Text Colors
+   */
+  --ion-background-color: #fafbfc;
+  --ion-background-color-rgb: 250, 251, 252;
+
+  --ion-text-color: #151b26;
+  --ion-text-color-rgb: 21, 27, 38;
+
+  --ion-color-step-50: #f2f2f2;
+  --ion-color-step-100: #e6e6e6;
+  --ion-color-step-150: #d9d9d9;
+  --ion-color-step-200: #cccccc;
+  --ion-color-step-250: #bfbfbf;
+  --ion-color-step-300: #b3b3b3;
+  --ion-color-step-350: #a6a6a6;
+  --ion-color-step-400: #999999;
+  --ion-color-step-450: #8c8c8c;
+  --ion-color-step-500: #808080;
+  --ion-color-step-550: #737373;
+  --ion-color-step-600: #666666;
+  --ion-color-step-650: #595959;
+  --ion-color-step-700: #4d4d4d;
+  --ion-color-step-750: #404040;
+  --ion-color-step-800: #333333;
+  --ion-color-step-850: #262626;
+  --ion-color-step-900: #1a1a1a;
+  --ion-color-step-950: #0d0d0d;
+}
+
+/**
+ * Force light mode styles
+ * -----------------------------------------------------
+ * Override any system dark mode preferences
+ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Override dark mode with light mode colors */
+    --ion-background-color: #ffffff;
+    --ion-background-color-rgb: 255, 255, 255;
+    --ion-text-color: #000000;
+    --ion-text-color-rgb: 0, 0, 0;
+  }
+}
+
+/**
+ * Custom App Colors and Typography for Light Theme
+ */
+:root {
+  --app-gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --app-gradient-secondary: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  --app-card-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --app-border-radius: 12px;
+  
+  /* Inter Font Family */
+  --ion-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}
+
+/**
+ * Global Font Configuration - Inter Font
+ * -----------------------------------------------------
+ * Apply Inter font to all elements in the application
+ */
+* {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  font-variation-settings: normal;
+}
+
+/**
+ * Inter Font Optimization
+ * -----------------------------------------------------
+ * Enable Inter font features for better readability
+ */
+.inter-font {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  font-variation-settings: normal;
+}
+
+/**
+ * Typography Scale with Inter Font
+ */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+p, span, div, button, input, textarea, label {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/**
+ * Ionic Component Font Override
+ */
+ion-title, ion-label, ion-input, ion-button, ion-item, ion-card-title, ion-card-subtitle {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+}
+
+/**
+ * Enhanced Typography Classes
+ */
+.text-heading-1 {
+  font-family: 'Inter', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.text-heading-2 {
+  font-family: 'Inter', sans-serif;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.text-heading-3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.text-body-large {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.text-body {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.text-body-small {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.text-caption {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+}
+
+/* ==========================================
+   SD DESIGN SYSTEM
+   ========================================== */
+
+/* SD Brand Colors */
+:root {
+  --sd-orange: #f06a6a;
+  --sd-orange-light: #f27979;
+  --sd-orange-dark: #d45d5d;
+  
+  --sd-teal: #13d4aa;
+  --sd-teal-light: #2bd8b3;
+  --sd-teal-dark: #11bb96;
+  
+  --sd-purple: #9ca6fc;
+  --sd-purple-light: #a6affc;
+  --sd-purple-dark: #8992de;
+  
+  --sd-green: #72dd9a;
+  --sd-green-light: #80e0a4;
+  --sd-green-dark: #64c287;
+  
+  --sd-yellow: #ffd666;
+  --sd-yellow-light: #ffda75;
+  --sd-yellow-dark: #e0bc5a;
+  
+  --sd-red: #fd9a9a;
+  --sd-red-light: #fda4a4;
+  --sd-red-dark: #de8787;
+  
+  /* Neutral Colors */
+  --sd-gray-900: #151b26;
+  --sd-gray-800: #2c333c;
+  --sd-gray-700: #3e4953;
+  --sd-gray-600: #4f5f6f;
+  --sd-gray-500: #6b7280;
+  --sd-gray-400: #9ca6af;
+  --sd-gray-300: #c4cdd5;
+  --sd-gray-200: #e2e8f0;
+  --sd-gray-100: #f1f5f9;
+  --sd-gray-50: #fafbfc;
+  
+  /* Surface Colors */
+  --sd-surface-primary: #ffffff;
+  --sd-surface-secondary: #fafbfc;
+  --sd-surface-tertiary: #f1f5f9;
+  --sd-surface-elevated: #ffffff;
+  
+  /* Border Colors */
+  --sd-border-light: #e2e8f0;
+  --sd-border-medium: #c4cdd5;
+  --sd-border-strong: #9ca6af;
+  
+  /* Shadow Definitions */
+  --sd-shadow-sm: 0 1px 2px 0 rgba(21, 27, 38, 0.05);
+  --sd-shadow-md: 0 4px 6px -1px rgba(21, 27, 38, 0.1), 0 2px 4px -1px rgba(21, 27, 38, 0.06);
+  --sd-shadow-lg: 0 10px 15px -3px rgba(21, 27, 38, 0.1), 0 4px 6px -2px rgba(21, 27, 38, 0.05);
+  --sd-shadow-xl: 0 20px 25px -5px rgba(21, 27, 38, 0.1), 0 10px 10px -5px rgba(21, 27, 38, 0.04);
+  --sd-shadow-card: 0 1px 3px 0 rgba(21, 27, 38, 0.12), 0 1px 2px 0 rgba(21, 27, 38, 0.24);
+  
+  /* Border Radius */
+  --sd-radius-xs: 4px;
+  --sd-radius-sm: 6px;
+  --sd-radius-md: 8px;
+  --sd-radius-lg: 12px;
+  --sd-radius-xl: 16px;
+  --sd-radius-2xl: 24px;
+  --sd-radius-full: 9999px;
+  
+  /* Spacing Scale (SD uses 4px base unit) */
+  --sd-space-0: 0;
+  --sd-space-1: 4px;
+  --sd-space-2: 8px;
+  --sd-space-3: 12px;
+  --sd-space-4: 16px;
+  --sd-space-5: 20px;
+  --sd-space-6: 24px;
+  --sd-space-8: 32px;
+  --sd-space-10: 40px;
+  --sd-space-12: 48px;
+  --sd-space-16: 64px;
+  --sd-space-20: 80px;
+  
+  /* Typography Scale */
+  --sd-text-xs: 0.75rem;    /* 12px */
+  --sd-text-sm: 0.875rem;   /* 14px */
+  --sd-text-base: 1rem;     /* 16px */
+  --sd-text-lg: 1.125rem;   /* 18px */
+  --sd-text-xl: 1.25rem;    /* 20px */
+  --sd-text-2xl: 1.5rem;    /* 24px */
+  --sd-text-3xl: 1.875rem;  /* 30px */
+  --sd-text-4xl: 2.25rem;   /* 36px */
+  
+  /* Line Heights */
+  --sd-leading-tight: 1.25;
+  --sd-leading-snug: 1.375;
+  --sd-leading-normal: 1.5;
+  --sd-leading-relaxed: 1.625;
+  --sd-leading-loose: 2;
+}
+
+/* SD Card Component Styles */
+.sd-card {
+  background: var(--sd-surface-primary);
+  border: 1px solid var(--sd-border-light);
+  border-radius: var(--sd-radius-lg);
+  box-shadow: var(--sd-shadow-card);
+  transition: all 0.2s ease-in-out;
+}
+
+.sd-card:hover {
+  box-shadow: var(--sd-shadow-md);
+  transform: translateY(-1px);
+  border-color: var(--sd-border-medium);
+}
+
+.sd-card-elevated {
+  background: var(--sd-surface-elevated);
+  box-shadow: var(--sd-shadow-lg);
+  border: none;
+}
+
+/* SD Button Styles */
+.sd-button-primary {
+  background: var(--sd-orange);
+  color: white;
+  border: none;
+  border-radius: var(--sd-radius-md);
+  padding: var(--sd-space-3) var(--sd-space-4);
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: var(--sd-text-sm);
+  transition: all 0.2s ease-in-out;
+}
+
+.sd-button-primary:hover {
+  background: var(--sd-orange-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--sd-shadow-sm);
+}
+
+.sd-button-secondary {
+  background: var(--sd-surface-primary);
+  color: var(--sd-gray-700);
+  border: 1px solid var(--sd-border-medium);
+  border-radius: var(--sd-radius-md);
+  padding: var(--sd-space-3) var(--sd-space-4);
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: var(--sd-text-sm);
+  transition: all 0.2s ease-in-out;
+}
+
+.sd-button-secondary:hover {
+  background: var(--sd-gray-50);
+  border-color: var(--sd-border-strong);
+}
+
+/* SD Typography Classes */
+.sd-heading-1 {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--sd-text-4xl);
+  font-weight: 700;
+  line-height: var(--sd-leading-tight);
+  color: var(--sd-gray-900);
+  letter-spacing: -0.025em;
+}
+
+.sd-heading-2 {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--sd-text-3xl);
+  font-weight: 600;
+  line-height: var(--sd-leading-tight);
+  color: var(--sd-gray-900);
+  letter-spacing: -0.025em;
+}
+
+.sd-heading-3 {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--sd-text-2xl);
+  font-weight: 600;
+  line-height: var(--sd-leading-snug);
+  color: var(--sd-gray-900);
+}
+
+.sd-heading-4 {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--sd-text-xl);
+  font-weight: 600;
+  line-height: var(--sd-leading-snug);
+  color: var(--sd-gray-900);
+}
+
+.sd-body {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--sd-text-base);
+  font-weight: 400;
+  line-height: var(--sd-leading-normal);
+  color: var(--sd-gray-700);
+}
+
+.sd-body-small {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--sd-text-sm);
+  font-weight: 400;
+  line-height: var(--sd-leading-normal);
+  color: var(--sd-gray-600);
+}
+
+.sd-caption {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--sd-text-xs);
+  font-weight: 500;
+  line-height: var(--sd-leading-normal);
+  color: var(--sd-gray-500);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Priority Colors (SD-style) */
+.sd-priority-high {
+  color: var(--sd-red);
+  background-color: rgba(253, 154, 154, 0.1);
+  border: 1px solid rgba(253, 154, 154, 0.3);
+}
+
+.sd-priority-medium {
+  color: var(--sd-yellow-dark);
+  background-color: rgba(255, 214, 102, 0.15);
+  border: 1px solid rgba(255, 214, 102, 0.4);
+}
+
+.sd-priority-low {
+  color: var(--sd-green-dark);
+  background-color: rgba(114, 221, 154, 0.1);
+  border: 1px solid rgba(114, 221, 154, 0.3);
+}
+
+/* Status Colors (SD-style) */
+.sd-status-completed {
+  color: var(--sd-green-dark);
+  background-color: rgba(114, 221, 154, 0.1);
+  border: 1px solid rgba(114, 221, 154, 0.3);
+}
+
+.sd-status-in-progress {
+  color: var(--sd-orange-dark);
+  background-color: rgba(240, 106, 106, 0.1);
+  border: 1px solid rgba(240, 106, 106, 0.3);
+}
+
+.sd-status-pending {
+  color: var(--sd-gray-600);
+  background-color: rgba(156, 166, 175, 0.1);
+  border: 1px solid rgba(156, 166, 175, 0.3);
+}
+
+.sd-status-cancelled {
+  color: var(--sd-red-dark);
+  background-color: rgba(253, 154, 154, 0.1);
+  border: 1px solid rgba(253, 154, 154, 0.3);
+}

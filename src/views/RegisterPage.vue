@@ -102,6 +102,7 @@ import { checkboxOutline } from 'ionicons/icons';
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { setAuthToken, setUserData } from '@/utils/auth';
+import { envUtils } from '@/config/env';
 
 const router = useRouter();
 
@@ -136,7 +137,7 @@ const handleRegister = async () => {
   loading.value = true;
   
   try {
-    const response = await fetch('http://localhost:3000/api/auth/register', {
+    const response = await fetch(envUtils.getApiUrl('/auth/register'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

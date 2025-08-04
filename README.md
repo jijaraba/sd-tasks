@@ -43,15 +43,72 @@ SD Tasks is a full-featured task management application that provides:
    # VITE_API_BASE_URL=http://localhost:3000/api
    ```
 
-4. **Start the development server:**
+4. **Configure environment for your target platform:**
+
+   **For Web Development:**
+   ```bash
+   ./switch-env.sh web
+   ```
+
+   **For Android Emulator:**
+   ```bash
+   ./switch-env.sh android
+   ```
+
+   **Manual Configuration:**
+   - Web: `VITE_API_BASE_URL=http://localhost:3000/api`
+   - Android: `VITE_API_BASE_URL=http://10.0.2.2:3000/api`
+
+5. **Start the development server:**
    ```bash
    npm run dev
    ```
 
-5. **Open your browser:**
+6. **Open your browser:**
    ```
    http://localhost:5173
    ```
+
+## ⚙️ Environment Configuration
+
+The Ionic project automatically uses the API URL from the `.env` file. The API service is configured to read from `VITE_API_BASE_URL`.
+
+### Environment Switcher Script
+
+Use the included script to easily switch between development environments:
+
+```bash
+# Check current configuration
+./switch-env.sh
+
+# Switch to web development (localhost)
+./switch-env.sh web
+
+# Switch to Android emulator (10.0.2.2)
+./switch-env.sh android
+```
+
+### Manual Configuration
+
+Edit the `.env` file directly:
+
+```bash
+# For web development
+VITE_API_BASE_URL=http://localhost:3000/api
+
+# For Android emulator  
+VITE_API_BASE_URL=http://10.0.2.2:3000/api
+
+# For production
+VITE_API_BASE_URL=https://your-api-domain.com/api
+```
+
+### How It Works
+
+1. **Environment Loading**: Vite loads variables from `.env` file
+2. **API Service**: Uses `env.API_BASE_URL` from environment config  
+3. **URL Construction**: `envUtils.getApiUrl(endpoint)` builds full URLs
+4. **Automatic**: No code changes needed, just update `.env` file
 
 ## 🛠️ Minimum Steps to Run Project
 

@@ -4,6 +4,9 @@
       <ion-toolbar class="sd-toolbar">
         <ion-title class="sd-header-title">Tasks</ion-title>
         <ion-buttons slot="end">
+          <ion-button @click="refreshTasks" fill="clear" class="sd-header-button">
+            <ion-icon :icon="refreshOutline"></ion-icon>
+          </ion-button>
           <ion-button @click="openCreateModal" fill="clear" class="sd-header-button">
             <ion-icon :icon="addOutline"></ion-icon>
           </ion-button>
@@ -139,6 +142,9 @@
               <ion-icon :icon="calendarOutline" class="calendar-icon"></ion-icon>
               <span class="due-date-text">{{ formatDate(task.dueDate) }}</span>
             </div>
+            
+            <!-- Offline Task Badge -->
+            <OfflineTaskBadge :task="task" />
           </div>
         </div>
       </div>
@@ -306,13 +312,17 @@ import {
   stopCircleOutline,
 } from 'ionicons/icons';
 import { ref, computed, onMounted, watch } from 'vue';
-import { apiService } from '@/services/api';
+import { useOfflineServices } from '@/services/offlineServices';
+import OfflineTaskBadge from '@/components/OfflineTaskBadge.vue';
+
+// Services
+const { taskService, networkService } = useOfflineServices();
 
 // Reactive data
-const loading = ref(true);
+const loading = taskService.getLoadingRef();
+const error = taskService.getErrorRef();
+const tasks = taskService.getTasksRef();
 const saving = ref(false);
-const error = ref('');
-const tasks = ref<any[]>([]);
 const searchText = ref('');
 const activeFilter = ref('all');
 
@@ -356,27 +366,21 @@ const filteredTasks = computed(() => {
     );
   }
 
-  return filtered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  return filtered.sort((a, b) => new Date(b.createdAt || b.updatedAt || '').getTime() - new Date(a.createdAt || a.updatedAt || '').getTime());
 });
+
+// Computed properties
+const isOffline = computed(() => taskService.isOffline());
+const offlineTasksCount = computed(() => tasks.value.filter(task => task.needsSync || task.isOffline).length);
 
 // Methods
 const loadTasks = async () => {
-  loading.value = true;
-  error.value = '';
-  
-  try {
-    const response = await apiService.getTasks();
-    if (response.success) {
-      tasks.value = (response.data as any)?.tasks || [];
-    } else {
-      error.value = response.error || 'Failed to load tasks';
-    }
-  } catch (err: any) {
-    error.value = err.message || 'Failed to load tasks';
-    console.error('Load tasks error:', err);
-  } finally {
-    loading.value = false;
-  }
+  await taskService.getTasks();
+};
+
+const refreshTasks = async () => {
+  await taskService.refreshTasks();
+  showToast('Tasks refreshed');
 };
 
 const openCreateModal = () => {
@@ -417,13 +421,7 @@ const closeModal = () => {
 
 const saveTask = async () => {
   if (!taskForm.value.title.trim()) {
-    const toast = await toastController.create({
-      message: 'Task title is required',
-      duration: 2000,
-      color: 'warning',
-      position: 'top',
-    });
-    await toast.present();
+    showToast('Task title is required', 'warning');
     return;
   }
 
@@ -432,82 +430,39 @@ const saveTask = async () => {
   try {
     const taskData = {
       title: taskForm.value.title.trim(),
-      description: taskForm.value.description.trim() || undefined,
-      priority: taskForm.value.priority,
-      status: taskForm.value.status,
+      description: taskForm.value.description?.trim() || '',
+      priority: taskForm.value.priority as 'low' | 'medium' | 'high',
+      status: taskForm.value.status as 'pending' | 'in_progress' | 'completed' | 'cancelled',
       dueDate: taskForm.value.dueDate || undefined,
     };
 
-    let response;
     if (editingTask.value) {
       // Update existing task
-      response = await apiService.updateTask(editingTask.value.id, taskData);
+      const result = await taskService.updateTask(editingTask.value.localId || editingTask.value.id, taskData);
+      if (result) {
+        showToast('Task updated successfully');
+        closeModal();
+      } else {
+        showToast('Failed to update task', 'danger');
+      }
     } else {
       // Create new task
-      response = await apiService.createTask(taskData);
-    }
-
-    if (response.success) {
-      const toast = await toastController.create({
-        message: editingTask.value ? 'Task updated successfully!' : 'Task created successfully!',
-        duration: 2000,
-        color: 'success',
-        position: 'top',
-      });
-      await toast.present();
-
-      closeModal();
-      await loadTasks(); // Reload tasks
-    } else {
-      throw new Error(response.error || 'Failed to save task');
+      const result = await taskService.createTask(taskData);
+      if (result) {
+        showToast(isOffline.value ? 'Task created offline' : 'Task created successfully');
+        closeModal();
+      } else {
+        showToast('Failed to create task', 'danger');
+      }
     }
   } catch (err: any) {
     console.error('Save task error:', err);
-    const toast = await toastController.create({
-      message: err.message || 'Failed to save task',
-      duration: 3000,
-      color: 'danger',
-      position: 'top',
-    });
-    await toast.present();
+    showToast(err.message || 'Failed to save task', 'danger');
   } finally {
     saving.value = false;
   }
 };
 
-const toggleTaskStatus = async (task: any) => {
-  const newStatus = task.status === 'completed' ? 'pending' : 'completed';
-  
-  try {
-    const response = await apiService.updateTaskStatus(task.id, newStatus);
-    if (response.success) {
-      // Update local task
-      const taskIndex = tasks.value.findIndex(t => t.id === task.id);
-      if (taskIndex !== -1) {
-        tasks.value[taskIndex] = { ...tasks.value[taskIndex], ...(response.data as any).task };
-      }
-      
-      const toast = await toastController.create({
-        message: `Task marked as ${newStatus}`,
-        duration: 1500,
-        color: 'success',
-        position: 'top',
-      });
-      await toast.present();
-    } else {
-      throw new Error(response.error || 'Failed to update task status');
-    }
-  } catch (err: any) {
-    console.error('Toggle status error:', err);
-    const toast = await toastController.create({
-      message: err.message || 'Failed to update task status',
-      duration: 2000,
-      color: 'danger',
-      position: 'top',
-    });
-    await toast.present();
-  }
-};
 
 const confirmDeleteTask = async (task: any) => {
   const alert = await alertController.create({
@@ -531,30 +486,15 @@ const confirmDeleteTask = async (task: any) => {
 
 const deleteTask = async (task: any) => {
   try {
-    const response = await apiService.deleteTask(task.id);
-    if (response.success) {
-      // Remove from local array
-      tasks.value = tasks.value.filter(t => t.id !== task.id);
-      
-      const toast = await toastController.create({
-        message: 'Task deleted successfully',
-        duration: 2000,
-        color: 'success',
-        position: 'top',
-      });
-      await toast.present();
+    const success = await taskService.deleteTask(task.localId || task.id);
+    if (success) {
+      showToast(isOffline.value ? 'Task marked for deletion' : 'Task deleted successfully');
     } else {
-      throw new Error(response.error || 'Failed to delete task');
+      showToast('Failed to delete task', 'danger');
     }
   } catch (err: any) {
     console.error('Delete task error:', err);
-    const toast = await toastController.create({
-      message: err.message || 'Failed to delete task',
-      duration: 2000,
-      color: 'danger',
-      position: 'top',
-    });
-    await toast.present();
+    showToast(err.message || 'Failed to delete task', 'danger');
   }
 };
 
@@ -569,6 +509,22 @@ const setFilter = (filter: string) => {
 
 const handleSearch = (event: any) => {
   searchText.value = event.target.value;
+};
+
+const toggleTaskStatus = async (task: any) => {
+  const newStatus = task.status === 'completed' ? 'pending' : 'completed';
+  await taskService.updateTask(task.localId || task.id, { status: newStatus });
+  showToast(`Task marked as ${newStatus === 'completed' ? 'completed' : 'pending'}`);
+};
+
+const showToast = async (message: string, color: string = 'success') => {
+  const toast = await toastController.create({
+    message,
+    duration: 3000,
+    color,
+    position: 'bottom',
+  });
+  await toast.present();
 };
 
 // Utility functions

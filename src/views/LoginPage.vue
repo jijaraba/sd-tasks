@@ -4,7 +4,7 @@
       <div class="login-container">
         <div class="header-section">
           <ion-icon :icon="checkboxOutline" class="logo"></ion-icon>
-          <h1>Welcome Back</h1>
+          <h1>Welcome Back.</h1>
           <p>Sign in to continue to SD Tasks</p>
         </div>
 
@@ -76,6 +76,7 @@ import { checkboxOutline } from 'ionicons/icons';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { setAuthToken, setUserData } from '@/utils/auth';
+import { envUtils } from '@/config/env';
 
 const router = useRouter();
 
@@ -88,7 +89,9 @@ const handleLogin = async () => {
   loading.value = true;
   
   try {
-    const response = await fetch('http://localhost:3000/api/auth/login', {
+    console.log("envUtils.getApiUrl('/auth/login')");
+    console.log(envUtils.getApiUrl('/auth/login'));
+    const response = await fetch(envUtils.getApiUrl('/auth/login'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

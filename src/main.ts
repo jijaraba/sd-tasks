@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router';
 import { validateEnvironment, env, envUtils } from './config/env';
+import { initializeOfflineServices } from './services/offlineServices';
 
 import { IonicVue } from '@ionic/vue';
 import '@ionic/vue/css/core.css';
@@ -25,7 +26,18 @@ const app = createApp(App)
   .use(IonicVue)
   .use(router);
 
-router.isReady().then(() => {
+// Initialize offline services and mount app
+Promise.all([
+  router.isReady(),
+  initializeOfflineServices()
+]).then(() => {
   app.mount('#app');
-  envUtils.log('info', 'Application mounted successfully');
+  envUtils.log('info', 'Application mounted successfully with offline capabilities');
+}).catch(error => {
+  console.error('Failed to initialize application:', error);
+  // Mount app anyway but with limited functionality
+  router.isReady().then(() => {
+    app.mount('#app');
+    envUtils.log('warn', 'Application mounted with limited offline capabilities');
+  });
 });
